@@ -35,7 +35,8 @@
                         type="number"
                         class="form-control"
                         id="productNum"
-                        :value="cart.qty"
+                        v-model.number="cart.qty"
+                        @blur="updateCart(cart.id, cart.product.id, cart.qty)"
                       />
                       <span class="input-group-text" id="basic-addon2">
                         {{ cart.product.unit }}
@@ -179,6 +180,26 @@ export default {
         .catch((err) => {
           alert(err.response.data.message);
         });
+    },
+    updateCart(cartId, productId, qty = 1) {
+      if (qty > 0 && Number.isInteger(qty)) {
+        const data = {
+          product_id: productId,
+          qty,
+        };
+        this.$http
+          .put(
+            `${process.env.VUE_APP_API_BASEURL}api/${process.env.VUE_APP_PATH}/cart/${cartId}`,
+            { data },
+          )
+          .then(() => {
+            alert('成功更新商品數量');
+            this.isLoading = false;
+          })
+          .catch((err) => {
+            console.dir(err);
+          });
+      }
     },
     deleteItem(id) {
       this.$http.delete(`${process.env.VUE_APP_API_BASEURL}api/${process.env.VUE_APP_PATH}/cart/${id}`).then(() => {

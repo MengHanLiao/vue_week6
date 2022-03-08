@@ -16,6 +16,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
+            <router-link class="nav-link" to="/">返回前台</router-link>
             <router-link class="nav-link" to="/admin/products">產品</router-link>
             <router-link class="nav-link" to="/admin/coupons">優惠卷</router-link>
             <router-link class="nav-link" to="/admin/orders">訂單</router-link>
